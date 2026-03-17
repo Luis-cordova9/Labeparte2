@@ -114,3 +114,7 @@ El estado (`modalOpen`, `activeIndex`) vive en `ImageGallery`, no en `ImageModal
 - **Tailwind CSS** — estilos y responsive design
 - **Lucide React** — iconos (`X`, `ChevronLeft`, `ChevronRight`, `Images`)
 - **React Router v7** — navegación entre páginas
+
+## Video de las 2 partes 
+
+https://youtu.be/A06ogxyabw8
