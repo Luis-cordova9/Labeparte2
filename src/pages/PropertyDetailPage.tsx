@@ -21,6 +21,7 @@ import {
   type Amenity,
 } from '@/types/property';
 import { formatPrice, formatArea } from '@/lib/utils';
+import { ImageGallery } from '@/components/ImageGallery';
 
 /**
  * Página de detalle de una propiedad.
@@ -57,10 +58,15 @@ export function PropertyDetailPage(): React.ReactElement {
     }
   };
 
-  // Imagen principal o placeholder
-  const mainImage =
-    property.images[0] ??
-    `https://placehold.co/1200x600/e2e8f0/64748b?text=${encodeURIComponent(property.propertyType)}`;
+  // Si no hay imágenes, usamos un placeholder
+  const images =
+    property.images.length > 0
+      ? property.images
+      : [
+          `https://placehold.co/1200x600/e2e8f0/64748b?text=${encodeURIComponent(
+            property.propertyType
+          )}`,
+        ];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -77,15 +83,11 @@ export function PropertyDetailPage(): React.ReactElement {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Columna principal */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Imagen principal */}
-          <div className="relative rounded-lg overflow-hidden">
-            <img
-              src={mainImage}
-              alt={property.title}
-              className="w-full h-[400px] object-cover"
-            />
+
+          {/* Badge de tipo de operación */}
+          <div className="flex items-center gap-2">
             <span
-              className={`absolute top-4 left-4 px-4 py-2 text-sm font-semibold rounded-full ${
+              className={`px-4 py-1.5 text-sm font-semibold rounded-full ${
                 property.operationType === 'venta'
                   ? 'bg-green-500 text-white'
                   : 'bg-blue-500 text-white'
@@ -95,19 +97,8 @@ export function PropertyDetailPage(): React.ReactElement {
             </span>
           </div>
 
-          {/* Galería de imágenes adicionales */}
-          {property.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {property.images.slice(1).map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`${property.title} - Imagen ${index + 2}`}
-                  className="w-full h-24 object-cover rounded-lg"
-                />
-              ))}
-            </div>
-          )}
+          {/* ── Galería de imágenes ── */}
+          <ImageGallery images={images} altBase={property.title} />
 
           {/* Descripción */}
           <Card>
